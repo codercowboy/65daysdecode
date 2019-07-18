@@ -6,6 +6,14 @@ The latest version of this is probably here: https://github.com/codercowboy/65da
 
 Originally authored in July of 2019 by [Jason Baker](jason@onejasonforsale.com). 
 
+# running the code
+
+To run the code, open the 65daysdecode.html file in the chrome browser. Simply loading the file will run the embedded javascript inside the file and log output to the developer console.
+
+# contributing
+
+If someone wants to clean up or contribute to the code. Send me PRs or [email me](jason@onejasonforsale.com) your changed file. I'll give you credit in this readme.
+
 # current results
 
 Current results show the messages aren't necessarily ciphered in a one to one manner, and there's already one example of a ciphered character being used twice, which also suggests the message ciphering may just be random noise :(
