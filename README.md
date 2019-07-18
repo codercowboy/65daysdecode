@@ -1,12 +1,10 @@
 # 65daysdecode
 
-An attempt to decode cryptic the band [65daysofstatic's instagram](https://www.instagram.com/65daysofstatic/?hl=en) posts from the summer of 2019.
+An attempt to decode the band [65daysofstatic's cryptic instagram posts](https://www.instagram.com/p/B0B2HowgOha/) from the summer of 2019.
 
 The latest version of this is probably here: https://github.com/codercowboy/65daysdecode
 
 Originally authored in July of 2019 by [Jason Baker](mailto:jason@onejasonforsale.com). 
-
-For reference, here's a direct link to one of the instagram posts in question: [link](https://www.instagram.com/p/B0B2HowgOha/).
 
 # running the code
 
