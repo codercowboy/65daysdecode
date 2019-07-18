@@ -6,6 +6,8 @@ The latest version of this is probably here: https://github.com/codercowboy/65da
 
 Originally authored in July of 2019 by [Jason Baker](mailto:jason@onejasonforsale.com). 
 
+For reference, here's a direct link to one of the instagram posts in question: [link](https://www.instagram.com/p/B0B2HowgOha/).
+
 # running the code
 
 To run the code, open the 65daysdecode.html file in the chrome browser. Simply loading the file will run the embedded javascript inside the file and log output to the developer console.
