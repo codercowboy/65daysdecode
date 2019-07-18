@@ -22,8 +22,8 @@
 			var encryptedChar = encryptedValue.charAt(i);
 			var decryptedChar = decryptedValue.charAt(i);
 			result += "Mapping character #" + i + ": " + print_character_info(encryptedChar) + " -> " + print_character_info(decryptedChar) + "\n";
-			if (decryptedChar == "?") {
-				result + "Skipping this character, decryption character is '?', signifying we don't know the mapping for it." + "\n";
+			if (decryptedChar == '?') {
+				result += "Skipping this character, decryption character is '?', signifying we don't know the mapping for it." + "\n";
 				continue;
 			}
 			var previouslyKnownMappedChar = alphabet.get(encryptedChar);
