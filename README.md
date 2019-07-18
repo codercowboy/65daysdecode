@@ -4,7 +4,7 @@ An attempt to decode cryptic the band [65daysofstatic's instagram](https://www.i
 
 The latest version of this is probably here: https://github.com/codercowboy/65daysdecode
 
-Originally authored in July of 2019 by [Jason Baker](jason@onejasonforsale.com). 
+Originally authored in July of 2019 by [Jason Baker](mailto:jason@onejasonforsale.com). 
 
 # running the code
 
@@ -12,7 +12,7 @@ To run the code, open the 65daysdecode.html file in the chrome browser. Simply l
 
 # contributing
 
-If someone wants to clean up or contribute to the code. Send me PRs or [email me](jason@onejasonforsale.com) your changed file. I'll give you credit in this readme.
+If someone wants to clean up or contribute to the code. Send me PRs or [email me](mailto:jason@onejasonforsale.com) your changed file. I'll give you credit in this readme.
 
 # current results
 
