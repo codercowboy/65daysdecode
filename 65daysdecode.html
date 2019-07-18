@@ -1,0 +1,127 @@
+<html>
+<script>
+	/* 
+		This script is an attempt at decoding 65daysofstatic's cryptic instagram posts
+		from the summer of 2019.
+
+		Simply run the code in a chrome browser, results will be logged to the console in developer tools.
+
+		Latest version of this and license is here: https://github.com/codercowboy/65daysdecode
+
+		original author: jason baker (jason@onejasonforsale.com) 
+	*/
+
+	var alphabet = new Map();
+	var unknownalphabet = new Array();
+	var charcodeforz = "z".charCodeAt(0);
+	var charcodeforzero = "0".charCodeAt(0);
+
+	function add_known_code(encryptedValue, decryptedValue) {
+		var result = "Now updating alphabet with known code from '" + encryptedValue + "' to '" + decryptedValue + "'.\n";
+		for (var i = 0; i < encryptedValue.length; i++) {
+			var encryptedChar = encryptedValue.charAt(i);
+			var decryptedChar = decryptedValue.charAt(i);
+			result += "Mapping character #" + i + ": " + print_character_info(encryptedChar) + " -> " + print_character_info(decryptedChar) + "\n";
+			if (decryptedChar == "?") {
+				result + "Skipping this character, decryption character is '?', signifying we don't know the mapping for it." + "\n";
+				continue;
+			}
+			var previouslyKnownMappedChar = alphabet.get(encryptedChar);
+			if (previouslyKnownMappedChar != null) {
+				result += "Error Pre-existing mapped char '" + print_character_info(encryptedChar) + "' -> " 
+					+ print_character_info(previouslyKnownMappedChar) + "' exists, overriding it with '" 
+					+ print_character_info(decryptedChar) + "'.\n";
+			}				
+			alphabet.set(encryptedChar, decryptedChar);	
+		}
+		result += "Finished updating alphabet with known code from '" + encryptedValue + "' to '" + decryptedValue + "'.\n";
+		return result;
+		
+	}
+
+	function decode(value) {
+		var result = "";
+		for (var i = 0; i < value.length; i++) {
+			var c = value.charAt(i);
+			var charCode = value.charCodeAt(i);
+			var replacement = alphabet.get(c);
+			if ((replacement == null) && (unknownalphabet.indexOf(c) == -1) 
+				&& ((charCode > charcodeforz) || (charCode < charcodeforzero))) {
+				unknownalphabet.push(c);
+			}
+			result += (replacement == null) ? c : replacement;
+		}
+		return result;
+	}
+
+	function print_known_alphabet() {
+		var result = "known characters:\n";
+		for (c of alphabet.keys()) {
+			result += print_character_info(c) + " -> "
+			result += print_character_info(alphabet.get(c)) + "\n";
+		}
+		return result;
+	}
+
+	function print_unknown_chars() {
+		var result = "unknown characters:\n";
+		for (var i = 0; i < unknownalphabet.length; i++) {
+			result += print_character_info(unknownalphabet[i]) + "\n";
+		}
+		return result;
+	}
+
+	function debug_alphabet() {
+		var fullAlphabet = new Map();
+		for (c of alphabet.keys()) {
+			fullAlphabet.set(c, alphabet.get(c));
+		}
+		for (var i = 0; i < unknownalphabet.length; i++) {
+			fullAlphabet.set(unknownalphabet[i], null);
+		}
+		var allKeys = [];
+		for (key of fullAlphabet.keys()) {
+			allKeys.push(key);
+		}
+
+		allKeys = allKeys.sort();
+		var result = "alphabet debug:\n";
+		for (var i = 0; i < allKeys.length; i++) {
+			var key = allKeys[i];
+			result += print_character_info(key) + " -> " + print_character_info(fullAlphabet.get(key)) + "\n";
+		}
+
+		return result;
+	}
+
+	function print_character_info(c) {
+		if (c == null) {
+			return null;
+		}
+		return c + " (" + c.charCodeAt(0) + ")";
+	}
+
+	var messages = [ "6▜d▋▍▟o▞▝▐a▝░", "▂e▄l▀c▖░▟▍▎▏▛", "r▌p▒▊▋▗▐▂▐▟", , "{▙e▉_▆r▐▜l▁█r}", 
+		"r▐▜l▁cr▍▎▏▛", "▊▔r▐▓▄▊▛▞▎▍▖▎▟", "▉▐▄▅▎▋▁▐▋65▄ep▋", "r▅p▖▊c▙//▖/2019", "▜▜▞▏▚▕▋▒▂▝░▋░", 
+		"▍▂█▜▂▇▉▀▓▒", "||▂|▒▅▊▒▂▟", "▆▟▉▗▘020▚0▔||", "▓▂r▒▒rr▓▍rr▅", "█r▇▟▖r▃▟▛▖▗r", 
+		"l▋▅▐▟▛pl▛▚r", "▞>▞▂▚▕▋▎▗;░e", "▜▇▒▅▇▔▀▃▛▘", "r▓▂r▒▒rr▓▍rr▅", "█r▇▟▖r▃▟▛▖▗", 
+		"r▖▞l▁▗▆,▄▎▉▌", "▀█▜▎▊▙▛▋▒▗▔▌r", "▁▇▃l▟▖█▁▓█▌▃", "▌▖▜░▏▍▎▏▛", "▋▒▊▃▚" ];
+
+
+	var finalResult = "";
+	finalResult += add_known_code("6▜d▋▍▟o▞▝▐a▝░", "65daysofstati");
+	finalResult += "\ndecoded posts:\n";
+
+	for (var i = 0; i < messages.length; i++) {
+		if (messages[i] != null) {
+			var message = messages[i];
+			finalResult += message + " -> " + decode(message) + "\n";
+		}
+	}
+
+	finalResult += "\n" + debug_alphabet() + "\n";
+
+	console.log(finalResult);	
+
+</script>
+</html>
