@@ -11,8 +11,15 @@
 		original author: jason baker (jason@onejasonforsale.com) 
 	*/
 
+	//maps crypted characters to regular alphabet, example: '▜' -> 'a'
 	var alphabet = new Map();
+
+	//characters that we can't find in our alphabet map
 	var unknownalphabet = new Array();
+
+	//maps characters to integer counts
+	var characterCounts = new Map();
+
 	var charcodeforz = "z".charCodeAt(0);
 	var charcodeforzero = "0".charCodeAt(0);
 
@@ -71,6 +78,44 @@
 		return result;
 	}
 
+	function count_characters(value) {
+		for (var i = 0; i < value.length; i++) {
+			var c = value.charAt(i);
+			var count = characterCounts.get(c);
+			count = (count == null) ? 1 : (count + 1);
+			characterCounts.set(c, count);
+		}
+	}
+
+	function debug_character_counts() {
+		var knownCounts = [];
+		console.log(characterCounts);
+		for (key of characterCounts.keys()) {
+			var count = characterCounts.get(key);
+			if (knownCounts.indexOf(count) == -1) {
+				knownCounts.push(count);
+			}
+		}
+		knownCounts = knownCounts.sort((a, b) => b - a)
+
+		var result = "character counts:\n";
+		for (var i = 0; i < knownCounts.length; i++) {
+			var knownCount = knownCounts[i];
+						console.log(knownCount);
+			for (key of characterCounts.keys()) {
+				var count = characterCounts.get(key);
+				if (!(knownCount == count)) {
+					continue;
+				}
+				result += key + " occurred " + count + " times";
+				var mappedChar = alphabet.get(key);
+				result += (mappedChar == null) ? " (unmapped)" : ("(mapped to '" + mappedChar + "')");
+				result += ".\n";
+			}
+		}
+		return result;
+	}
+
 	function debug_alphabet() {
 		var fullAlphabet = new Map();
 		for (c of alphabet.keys()) {
@@ -110,16 +155,37 @@
 
 	var finalResult = "";
 	finalResult += add_known_code("6▜d▋▍▟o▞▝▐a▝░", "65daysofstati");
+
+	/*
+		experiments for english language most common letter numbering based on character counts from existing messages:
+
+		most common letters in english language: e t a o i n s r h l d c u m f p g w y b v k x j q z
+
+		most common letters in english language w/ already mapped s and a removed: e t o i n r h l d c u m f p g w y b v k x j q z
+
+		r occurred 26 times (unmapped) - most common letter, could be e
+		▟ occurred 12 times(mapped to 's'). (skipped)
+		▒ occurred 12 times (unmapped) - second most common letter, could be t
+		▋ occurred 11 times(mapped to 'a'). (skipped)
+		▖ occurred 11 times (unmapped) - third most common letter, could be o
+		
+
+		this doesn't help though, it's still a jumbled mess when we add this..
+
+		finalResult += add_known_code("r▒▖", "eto");		
+	*/
 	finalResult += "\ndecoded posts:\n";
 
 	for (var i = 0; i < messages.length; i++) {
 		if (messages[i] != null) {
 			var message = messages[i];
+			count_characters(message);
 			finalResult += message + " -> " + decode(message) + "\n";
 		}
 	}
 
 	finalResult += "\n" + debug_alphabet() + "\n";
+	finalResult += "\n" + debug_character_counts() + "\n";
 
 	console.log(finalResult);	
 
